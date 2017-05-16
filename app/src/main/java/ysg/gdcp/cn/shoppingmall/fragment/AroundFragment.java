@@ -15,7 +15,7 @@ import com.yanzhenjie.nohttp.rest.Response;
 
 import ysg.gdcp.cn.shoppingmall.R;
 import ysg.gdcp.cn.shoppingmall.nohttp.MyHttpListener;
-import ysg.gdcp.cn.shoppingmall.nohttp.QueueUtils;
+import ysg.gdcp.cn.shoppingmall.Utils.QueueUtils;
 
 /**
  * A simple {@link Fragment} subclass.

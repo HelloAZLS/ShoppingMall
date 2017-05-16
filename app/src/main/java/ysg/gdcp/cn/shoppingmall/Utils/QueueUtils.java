@@ -1,10 +1,13 @@
-package ysg.gdcp.cn.shoppingmall.nohttp;
+package ysg.gdcp.cn.shoppingmall.Utils;
 
 import android.content.Context;
 
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
+
+import ysg.gdcp.cn.shoppingmall.nohttp.HttpResponeseListener;
+import ysg.gdcp.cn.shoppingmall.nohttp.MyHttpListener;
 
 /**
  * Created by Administrator on 2017/5/16 10:56.
