@@ -15,7 +15,6 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-import ysg.gdcp.cn.shoppingmall.MainActivity;
 import ysg.gdcp.cn.shoppingmall.R;
 
 public class GuideActivity extends AppCompatActivity {

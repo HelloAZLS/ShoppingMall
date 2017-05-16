@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':customerview', ':toolbar', ':nohttp'

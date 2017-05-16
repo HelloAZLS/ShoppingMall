@@ -9,6 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/customerview" />
+            <option value="$PROJECT_DIR$/nohttp" />
+            <option value="$PROJECT_DIR$/toolbar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import ysg.gdcp.cn.shoppingmall.MainActivity;
 import ysg.gdcp.cn.shoppingmall.R;
 
 public class SplashActivity extends AppCompatActivity {
