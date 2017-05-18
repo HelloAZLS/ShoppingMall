@@ -43,15 +43,14 @@
                     android:scaleType="centerCrop"
                     android:src="@mipmap/pic_b"/>
 
-                <ImageView
 
-                    android:id="@+id/iv_icon2"
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    android:id="@+id/iv_icon2"
                     android:layout_width="100dp"
-                    android:layout_height="80dp"
-                   android:background="@mipmap/pic_b"
-                    />
+                    fresco:placeholderImage="@mipmap/pic_b"
+                    android:layout_height="80dp"/>
 
                 <ImageView
                     android:id="@+id/appoitment_img"

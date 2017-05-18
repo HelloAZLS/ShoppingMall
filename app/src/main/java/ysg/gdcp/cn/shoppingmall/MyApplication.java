@@ -2,6 +2,7 @@ package ysg.gdcp.cn.shoppingmall;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.yanzhenjie.nohttp.NoHttp;
 
 /**
@@ -16,5 +17,7 @@ public class MyApplication extends Application {
         super.onCreate();
         //初始化nohttp
         NoHttp.initialize(this);
+        //Fresco图片加载框架初始化
+        Fresco.initialize(this);
     }
 }

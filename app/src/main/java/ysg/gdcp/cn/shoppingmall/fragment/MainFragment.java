@@ -114,7 +114,7 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
         });
         autoScroll();
 
-        mLvMainFragment.setAdapter(new MainFragmentListViewAdapter(getActivity(),mDataList));
+        mLvMainFragment.setAdapter(new MainFragmentListViewAdapter(getActivity(), mDataList));
         return view;
 
     }
