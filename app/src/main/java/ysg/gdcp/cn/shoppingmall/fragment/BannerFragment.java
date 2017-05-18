@@ -3,7 +3,6 @@ package ysg.gdcp.cn.shoppingmall.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class BannerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_banner, container, false);
         mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
         mIvBanner.setBackgroundResource(mImageID);
-        Log.i("nihao","tianzheng");
+
         return view;
     }
 
