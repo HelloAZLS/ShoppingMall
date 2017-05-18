@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -37,7 +40,8 @@ import ysg.gdcp.cn.shoppingmall.view.Indicator;
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment implements ContantsPool, MyHttpListener {
-
+    //电影名称
+    private String[] filmName = {"斯诺登", "回到过去", "左耳", "澳门风云2", "黑客帝国", "FBI", "拯救进行中"};
 
     private ViewPager mVpFrag; //新闻滚动ViewPager
     private int[] imgRes = {R.drawable.banner01, R.drawable.banner02, R.drawable.banner03};//新闻滚动ViewPager图片资源
@@ -57,6 +61,7 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
     private String[] mGoodsTitle;
     private ListView mLvMainFragment;
     private View mHeadView;
+    private LinearLayout mLayoutFilm;
 
     public MainFragment() {
         // Required empty public constructor
@@ -71,9 +76,11 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
 
         //ListVIew
         mLvMainFragment = (ListView) view.findViewById(R.id.lv_mainFragment);
-
+        //ListView头布局
         mHeadView = View.inflate(getActivity(), R.layout.fragment_main_head, null);
         mLvMainFragment.addHeaderView(mHeadView);
+        //电影列表布局
+        mLayoutFilm = (LinearLayout) view.findViewById(R.id.layout_film);
 
         //新闻滚动ViewPager
         mVpFrag = (ViewPager) mHeadView.findViewById(R.id.vp_mainfrag);
@@ -82,7 +89,6 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
 
         //商品分类viewpager
         mVpGoodsKinds = (ViewPager) mHeadView.findViewById(R.id.vp_goodskinds);
-
 
 
         //新闻滚动ViewPager适配器
@@ -132,7 +138,20 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
         }
         Request<String> recommendRequest = NoHttp.createStringRequest(spRecommendUrl, RequestMethod.GET);
         QueueUtils.getInstance().add(getActivity(), 0, recommendRequest, this, true, true);
+        //初始化电影列表数据
+        for (int i = 0; i < filmName.length; i++) {
+            View view = View.inflate(getActivity(), R.layout.film_item, null);
+            ImageView ivIcom = (ImageView) view.findViewById(R.id.iv_filmICon);
+            TextView tvFilmName = (TextView) view.findViewById(R.id.tv_filmName);
+            TextView tvFilmCount = (TextView) view.findViewById(R.id.tv_filmCount);
+            ivIcom.setImageResource(R.mipmap.ic_launcher);
+            tvFilmName.setText(filmName[i]);
+            tvFilmCount.setText(filmName[i]);
 
+
+            mLayoutFilm.addView(view);
+
+        }
 
     }
 
