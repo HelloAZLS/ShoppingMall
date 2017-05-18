@@ -10,5 +10,9 @@
     <color name="title_color">#ffff621d</color>
     <color name="value_color">#ffa2a2a2</color>
     <color name="white">#ffffffff</color>
+    <color name="app_gray">#ffeeeeee</color>
+    <color name="gray">#ff666666</color>
+    <color name="app_yellow">#ffff4c06</color>
+    <color name="text_content_black">#ff3c3c3c</color>
 
 </resources>

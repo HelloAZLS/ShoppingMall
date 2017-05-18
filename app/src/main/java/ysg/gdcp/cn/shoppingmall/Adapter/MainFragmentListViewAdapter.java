@@ -31,15 +31,6 @@ public class MainFragmentListViewAdapter extends CommenAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        ViewHolder holder = new ViewHolder();
-//        if (convertView == null) {
-////            convertView = View.inflate(mContext, R.layout.goods_list_item, null);
-////            convertView.setTag(holder);
-//        } else {
-//            holder = (ViewHolder) convertView.getTag();
-////        }
-//        holder.tvTitle = (TextView) convertView.findViewById(R.id.title);
-//        holder.tvTitle.setText(mDataList.get(position).getTitle());
 
         ViewHolder holder = ViewHolder.getHolder(mContext, R.layout.goods_list_item,convertView, parent);
         //标题

@@ -18,8 +18,6 @@ public class MainFragmentGoodsKindsAdapter extends PagerAdapter {
     private List<View> mGoodsList;
 
     public MainFragmentGoodsKindsAdapter(List<View> goodsList) {
-
-
         mGoodsList = goodsList;
     }
 

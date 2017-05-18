@@ -10,10 +10,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_filmICon"
             android:layout_width="80dp"
-            android:layout_height="80dp"/>
+            android:layout_height="80dp">
+        </com.facebook.drawee.view.SimpleDraweeView>
 
         <TextView
 
