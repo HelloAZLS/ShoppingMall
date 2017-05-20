@@ -1,16 +1,17 @@
 package ysg.gdcp.cn.shoppingmall.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -28,13 +29,14 @@ import ysg.gdcp.cn.shoppingmall.Utils.Config;
 import ysg.gdcp.cn.shoppingmall.Utils.QueueUtils;
 import ysg.gdcp.cn.shoppingmall.entity.GoodsDetailInfo;
 import ysg.gdcp.cn.shoppingmall.nohttp.MyHttpListener;
+import ysg.gdcp.cn.shoppingmall.view.MyScrollView;
 
 /**
  * Created by Administrator on 2017/5/18 09:58.
  *
  * @author ysg
  */
-public class DetailActivity extends AppCompatActivity implements MyHttpListener {
+public class DetailActivity extends AppCompatActivity implements MyHttpListener, MyScrollView.ScrollViwListener {
 
 
     @Bind(R.id.iv_detail)
@@ -60,7 +62,7 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener 
     @Bind(R.id.list_recommend)
     ListView mListRecommend;
     @Bind(R.id.scrollView)
-    ScrollView mScrollView;
+    MyScrollView mScrollView;
     @Bind(R.id.tv_titlebar)
     TextView mTvTitlebar;
     @Bind(R.id.iv_back)
@@ -80,6 +82,7 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener 
     @Bind(R.id.layout_buy)
     RelativeLayout mLayoutBuy;
     private GoodsDetailInfo mDetailInfo;
+    private int mHeight;
 
 //    private WebView mWebDetail;
 //    private WebView mWebNotice;
@@ -98,6 +101,21 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener 
         //商品详情页面数据解析
         Request<String> request = NoHttp.createStringRequest(Config.baseUrl + goods_id + ".txt", RequestMethod.GET);
         QueueUtils.getInstance().add(this, 0, request, this, true, true);
+        //设置ScrollView的监听
+        initListener();
+    }
+
+    //设置ScrollView的监听
+    private void initListener() {
+        ViewTreeObserver viewTreeObserver = mIvDetail.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mIvDetail.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                mHeight = mIvDetail.getHeight();
+                mScrollView.setScrollViwListener(DetailActivity.this);
+            }
+        });
     }
 
 
@@ -118,8 +136,8 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener 
                     mTvTitle.setText(mDetailInfo.getResult().getTitle());
                     mTvDecs.setText(mDetailInfo.getResult().getTitle());
                     mTvBought.setText(mDetailInfo.getResult().getValue());
-                    mTvAddress.setText(mDetailInfo.getResult().getAddress_id()+"");
-                    mTvPrice.setText(mDetailInfo.getResult().getPrice()+"");
+                    mTvAddress.setText(mDetailInfo.getResult().getAddress_id() + "");
+                    mTvPrice.setText(mDetailInfo.getResult().getPrice() + "");
                     Uri uri = Uri.parse(mDetailInfo.getResult().getImages().get(0).getImage());
                     mIvDetail.setImageURI(uri);
 
@@ -139,8 +157,8 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener 
         switch (view.getId()) {
             case R.id.iv_detail:
 
-                Intent intent = new Intent(DetailActivity.this,ImageActivity.class);
-                intent.putExtra("detailInfo",mDetailInfo);
+                Intent intent = new Intent(DetailActivity.this, ImageActivity.class);
+                intent.putExtra("detailInfo", mDetailInfo);
                 startActivity(intent);
                 break;
             case R.id.iv_back:
@@ -156,4 +174,23 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener 
     }
 
 
+    @Override
+    public void onScrollChange(MyScrollView scrollView, int x, int y, int oldX, int oldY) {
+        if (y <= 0) {
+            mTvTitlebar.setVisibility(View.GONE);
+            mLayoutTitle.setBackgroundColor(Color.argb(0, 0, 0, 0));
+        } else if (y > 0 && y < mHeight) {
+            float scal = (float) y / mHeight;
+            float alph = 255 * scal;
+            mTvTitlebar.setVisibility(View.VISIBLE);
+            mTvTitlebar.setText(mDetailInfo.getResult().getProduct());
+            mTvTitlebar.setTextColor(Color.argb((int) alph, 0, 0, 0));
+            mLayoutTitle.setBackgroundColor(Color.argb((int) alph, 255, 255, 255));
+        } else {
+            mTvTitlebar.setVisibility(View.VISIBLE);
+            mTvTitlebar.setText(mDetailInfo.getResult().getProduct());
+            mTvTitlebar.setTextColor(Color.argb(0, 0, 0, 0));
+            mLayoutTitle.setBackgroundColor(Color.argb(255, 255, 255, 255));
+        }
+    }
 }

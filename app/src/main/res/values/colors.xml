@@ -14,5 +14,20 @@
     <color name="gray">#ff666666</color>
     <color name="app_yellow">#ffff4c06</color>
     <color name="text_content_black">#ff3c3c3c</color>
-
+    <color name="app_bg">#fff7f7f7</color>
+    <color name="grad">#ff3c3c3c</color>
+    <color name="textColor_32">#ff323232</color>
+    <color name="gray01">#80666666</color>
+    <color name="home_title_bar_color">#ffff6f36</color>
+    <color name="title_bar_color">#ffffffff</color>
+    <color name="title_text_color">#ff323232</color>
+    <color name="orange">#ffff6900</color>
+    <color name="main_bg_color">#ffe2e2e2</color>
+    <color name="content_color">#ff687186</color>
+    <color name="app_white">#fff1f1f2</color>
+    <color name="login_unable_bg_green">#ff90e4da</color>
+    <color name="login_unable_bg">#ffcdced0</color>
+    <color name="transparent">#00000000</color>
+    <color name="image_view_btn_pressed_bgColor">#30000000</color>
+    <color name="my_gray_textColor">#ffa1a1a1</color>
 </resources>

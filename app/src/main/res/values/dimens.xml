@@ -8,4 +8,12 @@
     <dimen name="section_text_size">18.0sp</dimen>
     <dimen name="near_by_textSize1">17.0sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="size_22">17.0sp</dimen>
+    <dimen name="size_20">15.0sp</dimen>
+    <dimen name="size_18">13.0sp</dimen>
+    <dimen name="common_divider_height">10.0dip</dimen>
+    <dimen name="title_bar_center_textSize">20.0sp</dimen>
+    <dimen name="title_bar_righ_textSize">16.0sp</dimen>
+    <dimen name="size_24">19.0sp</dimen>
+    <dimen name="round_btn_green_tk_corner">2.0dip</dimen>
 </resources>

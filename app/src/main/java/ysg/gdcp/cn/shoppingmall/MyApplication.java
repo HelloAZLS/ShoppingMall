@@ -5,6 +5,8 @@ import android.app.Application;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.yanzhenjie.nohttp.NoHttp;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by Administrator on 2017/5/16 10:14.
  *
@@ -19,5 +21,7 @@ public class MyApplication extends Application {
         NoHttp.initialize(this);
         //Fresco图片加载框架初始化
         Fresco.initialize(this);
+        //初始化Bmob
+        Bmob.initialize(this, "b10697fbf55c9a53d9556a79650c62e9");
     }
 }

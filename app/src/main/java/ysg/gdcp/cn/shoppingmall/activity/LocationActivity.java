@@ -31,7 +31,7 @@ import com.baidu.mapapi.model.LatLngBounds;
 
 import ysg.gdcp.cn.shoppingmall.R;
 
-public class LocationActivity extends AppCompatActivity implements View.OnClickListener,CloudListener{
+public class LocationActivity extends AppCompatActivity implements View.OnClickListener, CloudListener {
 
     private TextureMapView mMapView;
     LocationClient mLocClient;
@@ -81,27 +81,28 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.btn_poi:
                 //周边检索
-                Toast.makeText(this, "开始检索" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "开始检索", Toast.LENGTH_SHORT).show();
                 NearbySearchInfo info = new NearbySearchInfo();
                 info.ak = "inLvUtLjqxZmHz6wO94lgFocABPv4QsI";
-                info.geoTableId=168504;
-                info.radius =100000;
-                info.location ="113.36108,23.188925";
+                info.geoTableId = 168504;
+                info.radius = 100000;
+                info.location = "113.36108,23.188925";
                 CloudManager.getInstance().nearbySearch(info);
                 break;
         }
     }
-//检索回调
+
+    //检索回调
     @Override
     public void onGetSearchResult(CloudSearchResult cloudSearchResult, int i) {
-        if (cloudSearchResult!=null&&cloudSearchResult.poiList!=null&&cloudSearchResult.poiList.size()>0){
+        if (cloudSearchResult != null && cloudSearchResult.poiList != null && cloudSearchResult.poiList.size() > 0) {
             mBaiduMap.clear();
             BitmapDescriptor bdp = BitmapDescriptorFactory.fromResource(R.mipmap.icon_gcoding);
-            LatLngBounds.Builder builder =new LatLngBounds.Builder();
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
             LatLng latLng;
             for (CloudPoiInfo cloudPoiInfo : cloudSearchResult.poiList) {
-                latLng =new LatLng(cloudPoiInfo.latitude,cloudPoiInfo.longitude);
-                MarkerOptions options =new MarkerOptions().icon(bdp).position(latLng);
+                latLng = new LatLng(cloudPoiInfo.latitude, cloudPoiInfo.longitude);
+                MarkerOptions options = new MarkerOptions().icon(bdp).position(latLng);
                 mBaiduMap.addOverlay(options);
                 builder.include(latLng);
             }
@@ -124,7 +125,7 @@ public class LocationActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-    // map view 销毁后不在处理新接收的位置
+            // map view 销毁后不在处理新接收的位置
             if (location == null || mMapView == null) {
                 return;
             }
