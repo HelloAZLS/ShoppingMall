@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
@@ -49,7 +51,7 @@ import static ysg.gdcp.cn.shoppingmall.Utils.Config.filmUrl;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment implements ContantsPool, MyHttpListener {
+public class MainFragment extends Fragment implements ContantsPool, MyHttpListener, View.OnClickListener {
 
     private ViewPager mVpFrag; //新闻滚动ViewPager
     private int[] imgRes = {R.drawable.banner01, R.drawable.banner02, R.drawable.banner03};//新闻滚动ViewPager图片资源
@@ -76,6 +78,11 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
     private LinearLayout mLayoutFilm;
     //listView
     private ListView mLvMainFragment;
+    private LinearLayout mLocationLIn;
+    private TextView mCityName;
+    private TextView mTitleTv;
+    private LinearLayout mInputLine;
+    private ImageView mScanImg;
 
     public MainFragment() {
         // Required empty public constructor
@@ -87,7 +94,7 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mian, container, false);
 
-
+        initTitleBar(view);
         //ListVIew
         mPullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.lv_mainFragment);
         //ListView头布局
@@ -160,6 +167,25 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
 
     }
 
+    //初始化titlebar控件
+    private void initTitleBar(View view) {
+        //位置
+        mLocationLIn = (LinearLayout) view.findViewById(R.id.location_lay);
+        mInputLine = (LinearLayout) view.findViewById(R.id.inputLL);
+        mInputLine.setVisibility(View.VISIBLE);
+        mLocationLIn.setVisibility(View.VISIBLE);
+        mScanImg = (ImageView) view.findViewById(R.id.scan_img);
+        mScanImg.setVisibility(View.VISIBLE);
+        mInputLine.setOnClickListener(this);
+        mScanImg.setOnClickListener(this);
+        mLocationLIn.setOnClickListener(this);
+        mCityName = (TextView) view.findViewById(R.id.city_name);
+//        标题
+        mTitleTv = (TextView) view.findViewById(R.id.title_tv);
+        mTitleTv.setText("首页");
+
+    }
+
     private void initData() {
         //获取GridView的标题资源
         mGoodsTitle = getResources().getStringArray(R.array.goods_title);
@@ -224,16 +250,16 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
                 FilmInfo filmInfo = gson.fromJson((String) response.get(), FilmInfo.class);
                 List<FilmInfo.ResultBean> resultBeen = filmInfo.getResult();
 
-                for (int i = 0; i <resultBeen.size() ; i++) {
+                for (int i = 0; i < resultBeen.size(); i++) {
                     View view = View.inflate(getActivity(), R.layout.film_item, null);
                     SimpleDraweeView ivIcom = (SimpleDraweeView) view.findViewById(R.id.iv_filmICon);
                     TextView tvFilmName = (TextView) view.findViewById(R.id.tv_filmName);
                     TextView tvFilmCount = (TextView) view.findViewById(R.id.tv_filmCount);
-                    Uri uri =Uri.parse(resultBeen.get(i).getImageUrl());
+                    Uri uri = Uri.parse(resultBeen.get(i).getImageUrl());
                     ivIcom.setImageURI(uri);
 
                     tvFilmName.setText(resultBeen.get(i).getFilmName());
-                    tvFilmCount.setText(resultBeen.get(i).getGrade()+"分");
+                    tvFilmCount.setText(resultBeen.get(i).getGrade() + "分");
                     mLayoutFilm.addView(view);
 
                 }
@@ -244,6 +270,24 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
     @Override
     public void onFailed(int what, Response response) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.scan_img:
+                //扫描二维码
+                Toast.makeText(getActivity(), "二维码", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.location_lay:
+                //跳转到定位cityactivity
+                Toast.makeText(getActivity(), "城市页面", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.inputLL:
+                //跳转到定位搜索页面
+                Toast.makeText(getActivity(), "搜索页面", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     //下拉刷新子线程

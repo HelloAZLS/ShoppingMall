@@ -30,4 +30,5 @@
     <color name="transparent">#00000000</color>
     <color name="image_view_btn_pressed_bgColor">#30000000</color>
     <color name="my_gray_textColor">#ffa1a1a1</color>
+    <color name="textColor_a0">#ffa0a0a0</color>
 </resources>

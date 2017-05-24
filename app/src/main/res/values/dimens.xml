@@ -16,4 +16,5 @@
     <dimen name="title_bar_righ_textSize">16.0sp</dimen>
     <dimen name="size_24">19.0sp</dimen>
     <dimen name="round_btn_green_tk_corner">2.0dip</dimen>
+    <dimen name="size_17">12.0sp</dimen>
 </resources>

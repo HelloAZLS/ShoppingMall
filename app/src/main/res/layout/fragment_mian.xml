@@ -4,6 +4,7 @@
               android:orientation="vertical"
     >
 
+    <include layout="@layout/title_bar"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/lv_mainFragment"

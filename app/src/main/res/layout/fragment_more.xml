@@ -1,13 +1,420 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="ysg.gdcp.cn.shoppingmall.fragment.MoreFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="More"/>
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/title_bar" />
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/top_bar"
+        android:layout_marginBottom="5.0dip"
+        android:background="@color/app_bg"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_divider_height"
+                android:layout_marginTop="@dimen/common_divider_height"
+                android:background="@color/app_bg"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/image_settings_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="51.0dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="12.0dip" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="@string/show_image_only_wifi"
+                        android:textColor="@color/textColor_32"
+                        android:textSize="@dimen/section_text_size" />
+
+                    <CheckBox
+                        android:id="@+id/iv_wifi_switch"
+                        android:layout_width="47.0dip"
+                        android:layout_height="23.0dip"
+                        android:button="@null"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/btn_switch" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@mipmap/black_line" />
+
+                <RelativeLayout
+                    android:id="@+id/set_remind_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="12.0dip" >
+
+                    <TextView
+                        android:id="@id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="@string/set_remind"
+                        android:textColor="@color/textColor_32"
+                        android:textSize="@dimen/section_text_size" />
+
+                    <CheckBox
+                        android:id="@+id/iv_remind_switch"
+                        android:button="@null"
+                        android:layout_width="47.0dip"
+                        android:layout_height="23.0dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/btn_switch"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@mipmap/black_line" />
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/share_setting_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1.0dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="15.0dip" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2.0dip"
+                        android:src="@mipmap/arrow_right_my_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="@string/share_setting"
+                        android:textColor="@color/textColor_32"
+                        android:textSize="@dimen/section_text_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/clear_cache_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="15.0dip" >
+
+                    <TextView
+                        android:id="@+id/cache_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5.0dip"
+                        android:text=""
+                        android:textColor="@color/textColor_a0"
+                        android:textSize="17.0sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="@string/clear_cache"
+                        android:textColor="@color/textColor_32"
+                        android:textSize="@dimen/section_text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffffff"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/good_comment_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:layout_marginTop="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15.0dip" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2.0dip"
+                        android:src="@mipmap/arrow_right_my_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="赏个好评"
+                        android:textColor="@color/textColor_32"
+                        android:textSize="@dimen/section_text_size" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@mipmap/black_line" />
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/feedback_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15.0dip" >
+
+                    <ImageView
+                        android:id="@+id/kefu_icom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2.0dip"
+                        android:src="@mipmap/arrow_right_my_gray" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/tv_feedback"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5.0dip"
+                            android:text="意见反馈"
+                            android:textColor="@color/textColor_32"
+                            android:textSize="@dimen/section_text_size" />
+
+                        <ImageView
+                            android:id="@+id/iv_feedback_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5.0dip"
+                            android:layout_toRightOf="@id/tv_feedback"
+                            android:background="@mipmap/update_hint"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@mipmap/divider_line" />
+
+                <RelativeLayout
+                    android:id="@+id/kefu_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15.0dip" >
+
+                    <TextView
+                        android:id="@+id/tv_tel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2.0dip"
+                        android:text="136-1602-7675"
+                        android:textColor="@color/textColor_a0"
+                        android:textSize="15.0sp" />
+
+                    <TextView
+                        android:id="@+id/tv_kf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="联系客服"
+                        android:textColor="@color/textColor_32"
+                        android:textSize="@dimen/section_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="2.0dip"
+                        android:layout_toRightOf="@id/tv_kf"
+                        android:text="(8:00-22:00)"
+                        android:textColor="@color/textColor_a0"
+                        android:textSize="14.0sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@mipmap/divider_line" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_divider_height"
+                android:layout_marginTop="@dimen/common_divider_height"
+                android:background="@color/app_gray"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/rl_softvare_update"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15.0dip" >
+
+                    <TextView
+                        android:id="@+id/version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2.0dip"
+                        android:text="当前版本"
+                        android:textColor="@color/textColor_a0"
+                        android:textSize="15.0sp" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/tv_check_update"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5.0dip"
+                            android:gravity="bottom"
+                            android:text="检查更新"
+                            android:textColor="@color/textColor_32"
+                            android:textSize="@dimen/section_text_size" />
+
+                        <ImageView
+                            android:id="@+id/iv_check_update_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5.0dip"
+                            android:layout_toRightOf="@id/tv_check_update"
+                            android:background="@mipmap/update_hint"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@mipmap/divider_line" />
+
+                <RelativeLayout
+                    android:id="@+id/help_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1.0dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@drawable/list_view_item_bg_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15.0dip" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5.0dip"
+                        android:src="@mipmap/arrow_right_my_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:text="关于"
+                        android:textColor="@color/textColor_32"
+                        android:textSize="@dimen/section_text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
+

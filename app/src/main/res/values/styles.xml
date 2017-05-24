@@ -42,4 +42,24 @@
         <item name="android:layout_height">50.0dip</item>
     </style>
 
+    <style name="left_back_img_photo_style">
+        <item name="android:background">@drawable/imageview_btn_selector</item>
+        <item name="android:paddingLeft">15.0dip</item>
+        <item name="android:paddingRight">15.0dip</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:src">@mipmap/icon_back_photo</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="title_bar_center_text_style">
+        <item name="android:textSize">20.0sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
 </resources>

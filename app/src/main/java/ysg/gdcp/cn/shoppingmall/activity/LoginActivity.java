@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +26,7 @@ import ysg.gdcp.cn.shoppingmall.R;
 import ysg.gdcp.cn.shoppingmall.Utils.BmobUtils;
 import ysg.gdcp.cn.shoppingmall.listener.MyBmobListener;
 import ysg.gdcp.cn.shoppingmall.listener.MyTextWatcher;
+
 
 public class LoginActivity extends AppCompatActivity implements MyBmobListener {
 
@@ -60,8 +61,12 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
     EditText mPassword;
     @Bind(R.id.cb_show_pwd)
     CheckBox mCbShowPwd;
+    //快速登录按钮
     @Bind(R.id.quick_login_btn)
     Button mQuickLoginBtn;
+    //账号登录按钮
+    @Bind(R.id.login_btn)
+    Button mLoginBtn;
     //底部线条往右移
     private Animation mAnimationLeft;
     //底部线条往左移
@@ -82,6 +87,10 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
     private String mPhoneNumber;
     private String mCode;
 
+    private boolean isShowPwd = false;
+    private String mLoginUserName;
+    private String mLoginPwd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,21 +101,17 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
     }
 
     private void initData() {
-        mBmobUtils = new BmobUtils();
+        mBmobUtils = new BmobUtils(this);
         mOrange = getResources().getColor(R.color.orange);
         mGray = getResources().getColor(R.color.gray);
-        //快速登录文本框的监听事件方法
+        //监听快速登录文本框
         quuickLoginListener();
+        //监听账号登录文本框
+        countLoginListener();
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //获取手机号码 验证码
-        mPhoneNumber = mEtQuickPhone.getText().toString().trim();
-        mCode = mEtQuickCode.getText().toString().trim();
-    }
+
 
     private void initAnimation() {
         //底部线条往右移
@@ -118,16 +123,21 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
     }
 
 
-    @OnClick({R.id.tv_quick_register, R.id.tv_count_register, R.id.tv_register, R.id.cb_show_pwd, R.id.quick_login_btn, R.id.btn_get_code})
+    @OnClick({R.id.tv_quick_register, R.id.tv_count_register, R.id.tv_register, R.id.cb_show_pwd
+            , R.id.quick_login_btn, R.id.btn_get_code,R.id.login_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_quick_register:
-                //快速登录文本
+                //快速登录文本动画
                 mViewLineRight.startAnimation(mAnimationRight);
+                mLoginBtn.setVisibility(View.GONE);
+                mQuickLoginBtn.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_count_register:
-                //帐号登录文本
+                //帐号登录文本动画
                 mViewLineLeft.startAnimation(mAnimationLeft);
+                mLoginBtn.setVisibility(View.VISIBLE);
+                mQuickLoginBtn.setVisibility(View.GONE);
                 break;
             case R.id.tv_register:
                 //跳转到注册页面
@@ -135,8 +145,16 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
                 break;
             case R.id.quick_login_btn:
                 //快速登录按钮
-                mBmobUtils.login(mPhoneNumber, mCode,LoginActivity.this);
-
+                //获取手机号码 验证码
+                mPhoneNumber = mEtQuickPhone.getText().toString().trim();
+                mCode = mEtQuickCode.getText().toString().trim();
+                mBmobUtils.login(mPhoneNumber, mCode, LoginActivity.this);
+                break;
+            case R.id.login_btn:
+                //账号登录按钮
+                mLoginUserName = mUsername.getText().toString().trim();
+                mLoginPwd = mPassword.getText().toString().trim();
+                mBmobUtils.countLogn(mLoginUserName,mLoginPwd,this);
                 break;
             case R.id.btn_get_code:
                 //获取验证码
@@ -144,8 +162,24 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
                     Toast.makeText(this, "手机号码为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mBmobUtils.getCode(mPhoneNumber,LoginActivity.this);
+                mBmobUtils.getCode(mPhoneNumber, LoginActivity.this);
                 break;
+
+            case R.id.cb_show_pwd:
+                //显示密码
+                //显示密码按钮切换
+                isShowPwd = isShowPwd ? false : true;
+                toggle();
+                break;
+        }
+    }
+
+    //显示密码按钮切换
+    private void toggle() {
+        if (isShowPwd) {
+            mPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+        } else {
+            mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
     }
 
@@ -190,6 +224,7 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
                 mViewLineRight.setVisibility(View.INVISIBLE);
                 mViewLineLeft.setVisibility(View.VISIBLE);
 
+
             }
 
             @Override
@@ -213,6 +248,25 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
             public void afterTextChanged(Editable s) {
                 isCodeNull = TextUtils.isEmpty(s.toString()) ? false : true;
                 mQuickLoginBtn.setEnabled(isCodeNull && isPhoneNull);
+            }
+        });
+    }
+
+    //监听账号登录文本框
+    private void countLoginListener() {
+        mUsername.addTextChangedListener(new MyTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                isCodeNull = TextUtils.isEmpty(s.toString()) ? false : true;
+                mLoginBtn.setEnabled(isCountNull && ispwdNull);
+
+            }
+        });
+        mPassword.addTextChangedListener(new MyTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                ispwdNull = TextUtils.isEmpty(s.toString()) ? false : true;
+                mLoginBtn.setEnabled(ispwdNull && ispwdNull);
             }
         });
     }
@@ -249,6 +303,9 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
 
     @Override
     public void loginSucess() {
-        Toast.makeText(LoginActivity.this, "年号", Toast.LENGTH_SHORT).show();
+       finish();
     }
+
+
+
 }

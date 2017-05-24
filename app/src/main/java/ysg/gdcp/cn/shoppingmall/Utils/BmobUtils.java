@@ -1,6 +1,7 @@
 package ysg.gdcp.cn.shoppingmall.Utils;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
@@ -18,6 +19,10 @@ import ysg.gdcp.cn.shoppingmall.listener.MyBmobListener;
 
 public class BmobUtils {
     private MyBmobListener mListener;
+
+    public BmobUtils(MyBmobListener listener) {
+        mListener = listener;
+    }
 
     /**
      * 获取手机验证码·方法
@@ -61,4 +66,24 @@ public class BmobUtils {
 //        Toast.makeText(activity, "测试登录按钮", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Bmob账号登录
+     * @param userName 用户名
+     * @param pwd 密码
+     */
+
+    public void countLogn(String userName, String pwd, final Activity activity) {
+        BmobUser.loginByAccount(userName, pwd, new LogInListener<MyUser>() {
+
+            @Override
+            public void done(MyUser user, BmobException e) {
+                if (user != null) {
+                    Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT).show();
+                    mListener.loginSucess();
+                }else {
+
+                }
+            }
+        });
+    }
 }
