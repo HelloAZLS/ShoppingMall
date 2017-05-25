@@ -277,7 +277,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/iv_share"
                 android:layout_toStartOf="@+id/iv_share"
-                android:src="@mipmap/icon_uncollect_black"/>
+                android:src="@drawable/icon_uncollected"
+                />
 
             <ImageView
                 android:id="@+id/iv_share"

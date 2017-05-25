@@ -1,6 +1,7 @@
 package ysg.gdcp.cn.shoppingmall.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.journeyapps.barcodescanner.CaptureActivity;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.Request;
@@ -46,6 +48,7 @@ import ysg.gdcp.cn.shoppingmall.entity.HomeGoodsInfo;
 import ysg.gdcp.cn.shoppingmall.nohttp.MyHttpListener;
 import ysg.gdcp.cn.shoppingmall.view.Indicator;
 
+import static cn.bmob.v3.Bmob.getApplicationContext;
 import static ysg.gdcp.cn.shoppingmall.Utils.Config.filmUrl;
 
 /**
@@ -151,7 +154,7 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("goods_id", mDataList.get(position - 1).getGoods_id());
+                intent.putExtra("goods_id", mDataList.get(position - 2).getGoods_id());
                 startActivity(intent);
             }
         });
@@ -278,6 +281,8 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
             case R.id.scan_img:
                 //扫描二维码
                 Toast.makeText(getActivity(), "二维码", Toast.LENGTH_SHORT).show();
+                Intent intent  =new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent,1);
                 break;
             case R.id.location_lay:
                 //跳转到定位cityactivity
@@ -285,6 +290,7 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
                 break;
             case R.id.inputLL:
                 //跳转到定位搜索页面
+
                 Toast.makeText(getActivity(), "搜索页面", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -310,4 +316,16 @@ public class MainFragment extends Fragment implements ContantsPool, MyHttpListen
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+       if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+
+            //result就是二维码扫描的结果。
+            String result = data.getStringExtra("RESULT");
+
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
 }

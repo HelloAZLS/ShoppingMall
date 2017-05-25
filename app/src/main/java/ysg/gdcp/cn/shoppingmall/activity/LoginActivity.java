@@ -16,14 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.exception.BmobException;
 import ysg.gdcp.cn.shoppingmall.R;
 import ysg.gdcp.cn.shoppingmall.Utils.BmobUtils;
+import ysg.gdcp.cn.shoppingmall.entity.FavorInfo;
 import ysg.gdcp.cn.shoppingmall.listener.MyBmobListener;
 import ysg.gdcp.cn.shoppingmall.listener.MyTextWatcher;
 
@@ -100,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
         initAnimation();
     }
 
+
     private void initData() {
         mBmobUtils = new BmobUtils(this);
         mOrange = getResources().getColor(R.color.orange);
@@ -110,7 +114,6 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
         countLoginListener();
 
     }
-
 
 
     private void initAnimation() {
@@ -124,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
 
 
     @OnClick({R.id.tv_quick_register, R.id.tv_count_register, R.id.tv_register, R.id.cb_show_pwd
-            , R.id.quick_login_btn, R.id.btn_get_code,R.id.login_btn})
+            , R.id.quick_login_btn, R.id.btn_get_code, R.id.login_btn, R.id.iv_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_quick_register:
@@ -154,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
                 //账号登录按钮
                 mLoginUserName = mUsername.getText().toString().trim();
                 mLoginPwd = mPassword.getText().toString().trim();
-                mBmobUtils.countLogn(mLoginUserName,mLoginPwd,this);
+                mBmobUtils.countLogn(mLoginUserName, mLoginPwd, this);
                 break;
             case R.id.btn_get_code:
                 //获取验证码
@@ -170,6 +173,9 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
                 //显示密码按钮切换
                 isShowPwd = isShowPwd ? false : true;
                 toggle();
+                break;
+            case R.id.iv_back:
+                finish();
                 break;
         }
     }
@@ -303,9 +309,33 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
 
     @Override
     public void loginSucess() {
-       finish();
+        finish();
     }
 
+    @Override
+    public void querySucess(FavorInfo favorInfo) {
+
+    }
+
+    @Override
+    public void queryFalure(BmobException e) {
+
+    }
+
+    @Override
+    public void queryAllFalure(BmobException e) {
+
+    }
+
+    @Override
+    public void queryAllSucess(List<FavorInfo> list) {
+
+    }
+
+    @Override
+    public void queryGIdSUcess(FavorInfo favorInfo) {
+
+    }
 
 
 }

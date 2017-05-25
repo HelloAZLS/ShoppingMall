@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.webkit.WebView;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
@@ -21,13 +23,21 @@ import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.exception.BmobException;
 import ysg.gdcp.cn.shoppingmall.R;
+import ysg.gdcp.cn.shoppingmall.Utils.BmobManager;
 import ysg.gdcp.cn.shoppingmall.Utils.Config;
 import ysg.gdcp.cn.shoppingmall.Utils.QueueUtils;
+import ysg.gdcp.cn.shoppingmall.entity.FavorInfo;
 import ysg.gdcp.cn.shoppingmall.entity.GoodsDetailInfo;
+import ysg.gdcp.cn.shoppingmall.listener.MyBmobQueryAllListener;
+import ysg.gdcp.cn.shoppingmall.listener.MyBmobQueryCallBack;
+import ysg.gdcp.cn.shoppingmall.listener.MyBmobQueryGIdListener;
 import ysg.gdcp.cn.shoppingmall.nohttp.MyHttpListener;
 import ysg.gdcp.cn.shoppingmall.view.MyScrollView;
 
@@ -84,25 +94,58 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener,
     private GoodsDetailInfo mDetailInfo;
     private int mHeight;
 
-//    private WebView mWebDetail;
-//    private WebView mWebNotice;
-//    private TextView mTvTitle;
-//    private TextView mTvDecs;
-//    private TextView mTvBought;
-//    private ImageView mIvDetail;
+    private boolean isFavor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-
         String goods_id = getIntent().getStringExtra("goods_id");
         //商品详情页面数据解析
         Request<String> request = NoHttp.createStringRequest(Config.baseUrl + goods_id + ".txt", RequestMethod.GET);
         QueueUtils.getInstance().add(this, 0, request, this, true, true);
+        //初始化favor
+        initFavor();
         //设置ScrollView的监听
         initListener();
+    }
+
+
+    private void initFavor() {
+        BmobManager.getInstance().queryAllData(new FavorInfo(), false, "isFavor", true);
+        BmobManager.getInstance().setListener(new MyBmobQueryAllListener() {
+            @Override
+            public void queryAllFalure(BmobException e) {
+                mIvFavor.setImageResource(R.drawable.icon_uncollected);
+            }
+
+            @Override
+            public void queryAllSucess(List<FavorInfo> list) {
+                for (int i = 0; i < list.size(); i++) {
+                    FavorInfo favorInfo = list.get(i);
+                    if (favorInfo.getGoodsId().equals(mDetailInfo.getResult().getGoods_id())) {
+                        BmobManager.getInstance().queryData(new FavorInfo(), favorInfo.getObjectId());
+                        BmobManager.getInstance().setListener(new MyBmobQueryCallBack() {
+                            @Override
+                            public void querySucess(FavorInfo favorInfo) {
+                                boolean favor = favorInfo.isFavor();
+                                Log.i("initData", " " + favor);
+                                mIvFavor.setImageResource(favor ? R.drawable.icon_collected_black : R.drawable.icon_uncollected);
+                                isFavor = favor ? true : false;
+                            }
+                            @Override
+                            public void queryFalure(BmobException e) {
+
+                            }
+                        });
+                    } else {
+                        mIvFavor.setImageResource(R.drawable.icon_uncollected);
+                    }
+                }
+            }
+        });
     }
 
     //设置ScrollView的监听
@@ -165,12 +208,51 @@ public class DetailActivity extends AppCompatActivity implements MyHttpListener,
                 finish();
                 break;
             case R.id.iv_favor:
+                //收藏功能实现
+                FavorInfo favorInfo = new FavorInfo();
+                GoodsDetailInfo.ResultBean bean = mDetailInfo.getResult();
+                favorInfo.setGoodsId(bean.getGoods_id());
+                favorInfo.setPropduct(bean.getProduct());
+                favorInfo.setPrice(bean.getPrice());
+                favorInfo.setValue(bean.getValue());
+                favorInfo.setImageUrl(bean.getImages().get(0).getImage());
+                if (!isFavor) {
+                    //收藏
+                    mIvFavor.setImageResource(R.drawable.icon_collected_black);
+                    favorInfo.setFavor(true);
+                    isFavor =true;
+                    Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+                    BmobManager.getInstance().insertData(favorInfo);
+                } else {
+                    //取消收藏
+                    Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
+                    mIvFavor.setImageResource(R.drawable.icon_uncollected);
+                    //取消收藏
+                    deteleteData();
+                    isFavor =false;
+//                    BmobManager.getInstance().deteleData(favorInfo);
+
+                }
+
                 break;
             case R.id.iv_share:
                 break;
             case R.id.btn_buy:
                 break;
         }
+    }
+
+    //取消收藏方法
+    private void deteleteData() {
+        BmobManager.getInstance().queryGoodsId(new FavorInfo(),mDetailInfo.getResult().getGoods_id());
+        BmobManager.getInstance().setListener(new MyBmobQueryGIdListener() {
+            @Override
+            public void queryGIdSUcess(FavorInfo favorInfo) {
+                //删除收藏的数据
+                BmobManager.getInstance().deteleData(new FavorInfo(),favorInfo.getObjectId());
+            }
+        });
+
     }
 
 

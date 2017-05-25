@@ -58,4 +58,7 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     testCompile 'junit:junit:4.12'
     compile files('libs/BaiduLBS_Android.jar')
+    //二维码集成
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    compile 'com.google.zxing:core:3.3.0'
 }

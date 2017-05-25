@@ -72,6 +72,8 @@
         </activity>
         <activity android:name=".activity.UnOrderActivity">
         </activity>
+        <activity android:name=".activity.Collectctivity">
+        </activity>
     </application>
 
 </manifest>
