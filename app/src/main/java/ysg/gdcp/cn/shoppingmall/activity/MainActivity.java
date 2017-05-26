@@ -1,5 +1,6 @@
 package ysg.gdcp.cn.shoppingmall.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -18,7 +19,7 @@ public class MainActivity extends FragmentActivity {
     private FragmentTabHost mFgTh;
     private int[] tabSelector = {R.drawable.ic_tab_artists_selector, R.drawable.ic_tab_albums_selector,
             R.drawable.ic_tab_songs_selector, R.drawable.ic_tab_playlists_selector};
-    private  String [] content ={"首页","周边","我的","更多"};
+    private String[] content = {"首页", "周边", "我的", "更多"};
 
 
     @Override
@@ -28,17 +29,29 @@ public class MainActivity extends FragmentActivity {
 
         mFgTh = (FragmentTabHost) findViewById(R.id.fg_th);
         mFgTh.setup(MainActivity.this, getSupportFragmentManager(), android.R.id.tabcontent);
-
-
+        //初始化用户登录
+        initUserTime();
         for (int i = 0; i < fragents.length; i++) {
             View tabView = View.inflate(MainActivity.this, R.layout.tab_item, null);
-            TextView tvContent  = (TextView) tabView.findViewById(R.id.tv_tab);
-            ImageView ivIcon =(ImageView)tabView.findViewById(R.id.iv_tab) ;
+            TextView tvContent = (TextView) tabView.findViewById(R.id.tv_tab);
+            ImageView ivIcon = (ImageView) tabView.findViewById(R.id.iv_tab);
             tvContent.setText(content[i]);
             ivIcon.setImageResource(tabSelector[i]);
-            mFgTh.addTab(mFgTh.newTabSpec(""+i).setIndicator(tabView), fragents[i], null);
+            mFgTh.addTab(mFgTh.newTabSpec("" + i).setIndicator(tabView), fragents[i], null);
         }
 
 
+    }
+
+    private void initUserTime() {
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        long time = sp.getLong("time", 0);
+        if (time > 0) {
+            //上次用户登录时间，与当前洗头时间相差30天，就要重新登录(2592000000)
+            long preTime  = System.currentTimeMillis() - time;
+            if(preTime>(30*24*60*60*1000)){
+                sp.edit().putBoolean("isLogin", false).commit();
+            }
+        }
     }
 }

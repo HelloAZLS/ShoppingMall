@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import ysg.gdcp.cn.shoppingmall.entity.FavorInfo;
+import ysg.gdcp.cn.shoppingmall.entity.MyUser;
 
 /**
  * Created by Administrator on 2017/5/25 15:01.
@@ -18,7 +19,7 @@ public abstract class MyBmobQueryGIdListener implements  MyBmobListener {
     }
 
     @Override
-    public void loginSucess() {
+    public void loginSucess(MyUser user) {
 
     }
 

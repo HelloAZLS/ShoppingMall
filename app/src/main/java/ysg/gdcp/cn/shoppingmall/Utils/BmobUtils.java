@@ -1,7 +1,7 @@
 package ysg.gdcp.cn.shoppingmall.Utils;
 
 import android.app.Activity;
-import android.widget.Toast;
+import android.util.Log;
 
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
@@ -40,10 +40,6 @@ public class BmobUtils {
                 }
             }
         });
-//        if (mListener != null) {
-//            mListener.getCodeSucess();
-//        }
-//        Toast.makeText(activity, "测试获取验证码", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -59,7 +55,7 @@ public class BmobUtils {
             @Override
             public void done(MyUser user, BmobException e) {
                 if (user != null) {
-                    mListener.loginSucess();
+                    mListener.loginSucess(user);
                 }
             }
         });
@@ -68,8 +64,9 @@ public class BmobUtils {
 
     /**
      * Bmob账号登录
+     *
      * @param userName 用户名
-     * @param pwd 密码
+     * @param pwd      密码
      */
 
     public void countLogn(String userName, String pwd, final Activity activity) {
@@ -78,10 +75,10 @@ public class BmobUtils {
             @Override
             public void done(MyUser user, BmobException e) {
                 if (user != null) {
-                    Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT).show();
-                    mListener.loginSucess();
-                }else {
-
+//                    Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT).show();
+                    mListener.loginSucess(user);
+                } else {
+                    Log.i("你好", e.getMessage());
                 }
             }
         });

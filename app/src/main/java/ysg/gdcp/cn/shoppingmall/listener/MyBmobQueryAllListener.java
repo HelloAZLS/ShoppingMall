@@ -2,6 +2,7 @@ package ysg.gdcp.cn.shoppingmall.listener;
 
 import cn.bmob.v3.exception.BmobException;
 import ysg.gdcp.cn.shoppingmall.entity.FavorInfo;
+import ysg.gdcp.cn.shoppingmall.entity.MyUser;
 
 /**
  * Created by Administrator on 2017/5/25 08:47.
@@ -16,7 +17,7 @@ public abstract class MyBmobQueryAllListener implements  MyBmobListener {
     }
 
     @Override
-    public void loginSucess() {
+    public void loginSucess(MyUser user) {
 
     }
 

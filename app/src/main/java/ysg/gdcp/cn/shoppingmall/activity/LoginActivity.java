@@ -1,6 +1,7 @@
 package ysg.gdcp.cn.shoppingmall.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,6 +30,8 @@ import cn.bmob.v3.exception.BmobException;
 import ysg.gdcp.cn.shoppingmall.R;
 import ysg.gdcp.cn.shoppingmall.Utils.BmobUtils;
 import ysg.gdcp.cn.shoppingmall.entity.FavorInfo;
+import ysg.gdcp.cn.shoppingmall.entity.MyUser;
+import ysg.gdcp.cn.shoppingmall.event.MessageEvent;
 import ysg.gdcp.cn.shoppingmall.listener.MyBmobListener;
 import ysg.gdcp.cn.shoppingmall.listener.MyTextWatcher;
 
@@ -308,7 +313,13 @@ public class LoginActivity extends AppCompatActivity implements MyBmobListener {
     }
 
     @Override
-    public void loginSucess() {
+    public void loginSucess(MyUser user) {
+
+        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        sp.edit().putBoolean("isLogin", true).putString("userName", user.getUsername())
+                .putString("blance", user.getBlance()).putLong("time",System.currentTimeMillis()).commit();
+        EventBus.getDefault().post(new MessageEvent(user.getUsername(), user.getImageUri(), user.getBlance()));
         finish();
     }
 

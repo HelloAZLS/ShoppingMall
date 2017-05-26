@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import ysg.gdcp.cn.shoppingmall.entity.FavorInfo;
+import ysg.gdcp.cn.shoppingmall.entity.MyUser;
 
 /**
  * Created by Administrator on 2017/5/20 11:23.
@@ -16,7 +17,7 @@ public interface MyBmobListener {
     void getCodeSucess();
 
     //登录成功
-    void loginSucess();
+    void loginSucess(MyUser user);
 
     //查询成功
     void querySucess(FavorInfo favorInfo);

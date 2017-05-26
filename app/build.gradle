@@ -61,4 +61,6 @@ dependencies {
     //二维码集成
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.google.zxing:core:3.3.0'
+    //引入EventBus
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
